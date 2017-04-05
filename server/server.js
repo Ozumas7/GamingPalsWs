@@ -19,6 +19,7 @@ io.on('connection', function(socket) {
 
     usersRepository.addUserOrUpdate(socket);
     socket.on('new-message', function(data) {
+        console.log(data);
         var receiver = usersRepository.findUser(data.receiver);
         var sender = usersRepository.findUserBySocket(socket);
         data.sender = sender.username;
