@@ -1,9 +1,7 @@
 module.exports ={
   users : [],
   addUserOrUpdate :function(socket){
-      var user = this.formatParams(socket.handshake.headers.cookie);
-      user.id = socket.handshake.query.id;
-      user.picture = socket.handshake.query.picture;
+      var user = socket.handshake.query;
       var savedUser = this.findUser(user.username);
       if (typeof savedUser === "undefined" || savedUser===null){
           user.ids = [socket.id];
@@ -14,21 +12,8 @@ module.exports ={
           this.users[key] = savedUser;
       }
   },
-  checkIfUser: function(socket){
-      if (typeof socket.handshake.headers.cookie === "undefined") {
-          socket.disconnect();
-        return false;
-      }
-      var user = this.formatParams(socket.handshake.headers.cookie);
-      if ((typeof user.token === "undefined" || user.token === null)){
-          socket.disconnect();
-          return false;
-      }
-      return true;
-}
-  ,
   findUserBySocket: function(socket){
-      var user =  this.formatParams(socket.handshake.headers.cookie);
+      var user =  socket.handshake.query;
       return this.findUser(user.username);
   },
 
@@ -36,7 +21,7 @@ module.exports ={
       return this.users.find((a)=>{ return a.username === username});
   },
   spliceUser : function(socket){
-      var user = this.formatParams(socket.handshake.headers.cookie);
+      var user = socket.handshake.query;
       var savedUser = this.findUser(user.username);
       var key = this.users.indexOf(savedUser);
       if (typeof savedUser !== "undefined" || savedUser !== null){

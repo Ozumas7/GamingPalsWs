@@ -10,16 +10,12 @@ server.listen(8081, function() {
 });
 
 
-io.set('origins','*:*');
+io.set('origins','http://gaming-pals.com:8080');
 
 var users = usersRepository.users;
 io.on('connection', function(socket) {
-
-    if (usersRepository.checkIfUser(socket)){
-
     usersRepository.addUserOrUpdate(socket);
     socket.on('new-message', function(data) {
-        console.log(data);
         var receiver = usersRepository.findUser(data.receiver);
         var sender = usersRepository.findUserBySocket(socket);
         data.sender = sender.username;
@@ -47,7 +43,6 @@ io.on('connection', function(socket) {
             if(typeof receiver !== "undefined"){
                 receiver.ids.forEach((a)=>{
                     if(typeof io.sockets.connected[a] !== "undefined") {
-                        console.log("ey");
                         io.sockets.connected[a].emit('istyping', dataSocket);
                     }
                 });
@@ -71,6 +66,5 @@ io.on('connection', function(socket) {
                return p;
            })
         }
-    }
 });
 
