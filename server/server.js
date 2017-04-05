@@ -1,9 +1,9 @@
-let express = require('express');
-let app = express();
-let server = require('http').Server(app);
-let io = require('socket.io')(server);
-let req = require("request");
-let usersRepository = require('./userRepository');
+var express = require('express');
+var app = express();
+var server = require('http').Server(app);
+var io = require('socket.io')(server);
+var req = require("request");
+var usersRepository = require('./userRepository');
 
 
 server.listen(8081, function() {
@@ -12,23 +12,23 @@ server.listen(8081, function() {
 
 io.set('origins','localhost:8080');
 
-let users = usersRepository.users;
+var users = usersRepository.users;
 io.on('connection', function(socket) {
 
     if (usersRepository.checkIfUser(socket)){
 
     usersRepository.addUserOrUpdate(socket);
     socket.on('new-message', function(data) {
-        let receiver = usersRepository.findUser(data.receiver);
-        let sender = usersRepository.findUserBySocket(socket);
+        var receiver = usersRepository.findUser(data.receiver);
+        var sender = usersRepository.findUserBySocket(socket);
         data.sender = sender.username;
-        let dataSocket = {};
+        var dataSocket = {};
         dataSocket.sender = {"id": sender.id};
         dataSocket.receiver = {"id": receiver.id};
         dataSocket.text = data.message;
         dataSocket.moment= + new Date();
         if(typeof receiver !== "undefined" && typeof sender!=="undefined"){
-            let receivers = receiver.ids.concat(sender.ids);
+            var receivers = receiver.ids.concat(sender.ids);
             receivers.forEach((a)=>{
                 if(typeof io.sockets.connected[a] !== "undefined") {
                     io.sockets.connected[a].emit('receive-message', dataSocket);
@@ -38,9 +38,9 @@ io.on('connection', function(socket) {
     });
 
         socket.on('typing', function(data) {
-            let receiver = usersRepository.findUser(data.receiver.username);
-            let sender = usersRepository.findUserBySocket(socket);
-            let dataSocket = {};
+            var receiver = usersRepository.findUser(data.receiver.username);
+            var sender = usersRepository.findUserBySocket(socket);
+            var dataSocket = {};
             dataSocket.sender = sender;
             dataSocket.typing = data.typing;
             if(typeof receiver !== "undefined"){
@@ -63,7 +63,7 @@ io.on('connection', function(socket) {
 
         function returnUsersConnected() {
            return usersRepository.users.map((e)=>{
-               let p = {};
+               var p = {};
                p.username = e.username;
                p.picture = e.picture;
                p.id = e.id;
