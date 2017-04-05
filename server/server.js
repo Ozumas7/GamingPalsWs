@@ -10,7 +10,7 @@ server.listen(8081, function() {
 });
 
 
-io.set('origins','localhost:8080');
+io.set('origins','*:*');
 
 var users = usersRepository.users;
 io.on('connection', function(socket) {
