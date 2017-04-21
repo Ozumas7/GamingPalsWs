@@ -10,7 +10,8 @@ server.listen(8081, function() {
 });
 
 
-io.set('origins','http://gaming-pals.com:8080');
+io.set('origins','*:*');
+//io.set('origins','http://gaming-pals.com:8080');
 
 var users = usersRepository.users;
 io.on('connection', function(socket) {
@@ -28,6 +29,7 @@ io.on('connection', function(socket) {
             var receivers = receiver.ids.concat(sender.ids);
             receivers.forEach((a)=>{
                 if(typeof io.sockets.connected[a] !== "undefined") {
+                    console.log(a);
                     io.sockets.connected[a].emit('receive-message', dataSocket);
                 }
             });

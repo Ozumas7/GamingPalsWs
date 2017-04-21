@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="//www.WebRTC-Experiment.com/RecordRTC.js"></script>
+    <script src="https://cdn.jsdelivr.net/binaryjs/0.2.1/binary.min.js"></script>
+</head>
+<body>
+
+<script>
+    let options = {mimeType: 'audio/webm'};
+    mediaRecorder = new MediaRecorder(stream, options);
+    mediaRecorder.ondataavailable = handleDataAvailable;
+    mediaRecorder.start();
+
+    function handleDataAvailable(event) {
+        if (event.data.size > 0) {
+            recordedChunks.push(event.data);
+        } else {
+            // ...
+        }
+    }
+</script>
+<button onclick="startRecording()">Record</button>
+<button onclick="stopRecording();">Stop</button>
+</body>
+</html>
