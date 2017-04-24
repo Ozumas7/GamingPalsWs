@@ -1,14 +1,20 @@
 var express = require('express');
 var app = express();
-var server = require('http').Server(app);
-var io = require('socket.io')(server);
 var req = require("request");
+var https = require('https');
+var fs = require('fs');
 var usersRepository = require('./userRepository');
 
+let options = {
+    ca: fs.readFileSync('../gaming-pals_com.ca-bundle'),
+    key: fs.readFileSync('../gamingpals-pals.key'),
+    cert: fs.readFileSync('../gaming-pals_com.crt')
+};
 
-server.listen(8081, function() {
-});
+let server = https.createServer(options);
 
+server.listen(8081);
+var io = require('socket.io')(server);
 
 io.set('origins','*:*');
 //io.set('origins','http://gaming-pals.com:8080');
