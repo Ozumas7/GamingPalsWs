@@ -5,13 +5,13 @@ var https = require('https');
 var fs = require('fs');
 var usersRepository = require('./userRepository');
 
-let options = {
+var options = {
     ca: fs.readFileSync('../gaming-pals_com.ca-bundle'),
     key: fs.readFileSync('../gamingpals-pals.key'),
     cert: fs.readFileSync('../gaming-pals_com.crt')
 };
 
-let server = https.createServer(options);
+var server = https.createServer(options);
 
 server.listen(8081,(a)=> {
     console.log("listening");
