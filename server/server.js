@@ -6,7 +6,7 @@ var fs = require('fs');
 var usersRepository = require('./userRepository');
 
 var options = {
-    ca: fs.readFileSync('../gaming-pals_com.ca-bundle'),
+    ca: fs.readFileSync('/GamingPalsWs/gaming-pals_com.ca-bundle'),
     key: fs.readFileSync('../gamingpals-pals.key'),
     cert: fs.readFileSync('../gaming-pals_com.crt')
 };
