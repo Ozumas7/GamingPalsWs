@@ -13,7 +13,9 @@ let options = {
 
 let server = https.createServer(options);
 
-server.listen(8081);
+server.listen(8081,(a)=> {
+    console.log("listening");
+});
 var io = require('socket.io')(server);
 
 io.set('origins','*:*');
