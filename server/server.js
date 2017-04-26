@@ -7,8 +7,8 @@ var usersRepository = require('./userRepository');
 
 var options = {
     ca: fs.readFileSync('/servers/GamingPalsWs/gaming-pals_com.ca-bundle'),
-    key: fs.readFileSync('/servers/GamingPalsWs/gamingpals-pals.key'),
-    cert: fs.readFileSync('/servers/GamingPalsWs/gaming-pals_com.crt')
+    key: fs.readFileSync('/root/servers/GamingPalsWs/gamingpals-pals.key'),
+    cert: fs.readFileSync('/root/servers/GamingPalsWs/gaming-pals_com.crt')
 };
 
 var server = https.createServer(options);
